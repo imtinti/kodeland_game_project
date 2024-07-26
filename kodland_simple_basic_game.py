@@ -28,7 +28,7 @@ COLISION_DETECTED = 'colision_detected'
 
 
 game_state = MAIN_MENU
-global tries_number
+
 
 # State captions options
 HOME_SCREEN = 'HOME'
@@ -49,11 +49,22 @@ def draw_text(text, font, color, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
+
+def draw_text_two(text, font, color, surface, center_x, center_y):
+    textobj = font.render(text, True, color)
+    textrect = textobj.get_rect(center=(center_x, center_y))
+    surface.blit(textobj, textrect)
+    
+
 def main_menu():
+
+
     screen.fill(WHITE)
-    draw_text('Main Menu', font, BLACK, screen, 20, 20)
-    draw_text('Press ENTER to Start', small_font, BLACK, screen, 20, 100)
-    draw_text('Press Q to Quit', small_font, BLACK, screen, 20, 140)
+
+    draw_text_two('Main Menu', font, BLACK, screen, WIDTH // 2, HEIGHT // 4)
+    draw_text_two('Press ENTER to Start', small_font, BLACK, screen, WIDTH // 2, HEIGHT // 2)
+    draw_text_two('Press Q to Quit', small_font, BLACK, screen, WIDTH // 2, HEIGHT // 2 + 40)
+
 
     # Setting caption screen
     pygame.display.set_caption(HOME_SCREEN)
@@ -61,10 +72,13 @@ def main_menu():
     pygame.display.update()
 
 def pause_menu():
+
     screen.fill(WHITE)
-    draw_text('Pause Menu', font, BLACK, screen, 20, 20)
-    draw_text('Press ESC to Resume', small_font, BLACK, screen, 20, 100)
-    draw_text('Press M to Main Menu', small_font, BLACK, screen, 20, 140)
+
+
+    draw_text_two('Pause Menu', font, BLACK, screen, WIDTH_GAME // 2, ((HEIGHT_GAME // 8) + 40))
+    draw_text_two('Press ESC to Resume', small_font, BLACK, screen, WIDTH_GAME // 2, HEIGHT_GAME // 2)
+    draw_text_two('Press M to Main Menu', small_font, BLACK, screen, WIDTH_GAME // 2, HEIGHT_GAME // 2 + 20)
 
     # Setting caption screen
     pygame.display.set_caption(PAUSE_SCREEN)
@@ -113,10 +127,10 @@ def game_loop(player, enemies, tries_number):
                 #player, enemies = init_new_game()
                 return COLISION_DETECTED  # Go back to main menu on collision
 
-        # Draw text on the game screen
-        draw_text('Press ENTER to PAUSE', small_font, BLACK, screen, 20, 20)
-        draw_text('Use arrows to control the red block', small_font, BLACK, screen, 20, 40)
-        draw_text(f'Tries number: {tries_number}' , small_font, BLACK, screen, 20, 60)
+
+        draw_text_two('Press ENTER to PAUSE', small_font, BLACK, screen, WIDTH_GAME // 2, 20)
+        draw_text_two('Use arrows to control the red block', small_font, BLACK, screen, WIDTH_GAME // 2, 60)
+        draw_text_two(f'Tries number: {tries_number}' , small_font, BLACK, screen,WIDTH_GAME // 2, 80)
         
 
         pygame.display.update()
@@ -153,7 +167,6 @@ def run_game():
 
     global game_state
 
-
     # Screen home setup
     pygame.display.set_caption(HOME_SCREEN)
 
@@ -163,6 +176,7 @@ def run_game():
 
         #MAIN MENU
         if game_state == MAIN_MENU:
+            
             main_menu()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -204,9 +218,10 @@ def run_game():
                     if event.key == pygame.K_ESCAPE:
                         game_state = GAME_RUNNING
 
-                    if event.key == pygame.K_m:
+                    if event.key == pygame.K_m: #user choose to goback to initial menu
+                        #set screen size
+                        pygame.display.set_mode((WIDTH, HEIGHT))
                         #reset player positions
-
                         player, enemies, tries_number = init_new_game()
                         
                         #goback to main menu
