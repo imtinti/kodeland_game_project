@@ -12,6 +12,8 @@ pygame.init()
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 17, 17)
+GREEN = (17, 255, 129)
+BLUE = (0, 0, 255)
 
 # Clock
 clock = pygame.time.Clock()
@@ -129,8 +131,20 @@ def game_loop(player, enemies, tries_number):
 
 
         draw_text_two('Press ENTER to PAUSE', small_font, BLACK, screen, WIDTH_GAME // 2, 20)
-        draw_text_two('Use arrows to control the red block', small_font, BLACK, screen, WIDTH_GAME // 2, 60)
-        draw_text_two(f'Tries number: {tries_number}' , small_font, BLACK, screen,WIDTH_GAME // 2, 80)
+        draw_text_two('Use arrows to control the red block', small_font, BLACK, screen, WIDTH_GAME // 2, 40)
+        draw_text_two('Don not touch the black blocks!', small_font, BLACK, screen, WIDTH_GAME // 2, 60)
+
+
+        draw_text_two(f'Tries number: {tries_number}' , small_font, BLACK, screen, WIDTH_GAME // 6, HEIGHT_GAME//2)
+
+        # Draw start line
+        pygame.draw.line(screen, GREEN, (0, 100), (WIDTH_GAME, 100), 5)
+        draw_text('FINISH', small_font, GREEN, screen, 10, 80)
+
+        # Draw finish line
+        pygame.draw.line(screen, BLUE, (0, HEIGHT_GAME - 100), (WIDTH_GAME, HEIGHT_GAME - 100), 5)
+        draw_text('START', small_font, BLUE, screen, 10, HEIGHT_GAME - 95)
+
         
 
         pygame.display.update()
