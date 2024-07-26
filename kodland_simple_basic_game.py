@@ -182,8 +182,11 @@ def run_game():
             if game_state == COLISION_DETECTED: #MEANS THAT HAS OCURRED AN COLLISION
                 tries_number = tries_number + 1
                 player = reset_start_position() # RESET GAME
-                game_state = GAME_RUNNING # GO BACK TO MAIN MENU STATE
                 #increase score, decrease life, etc
+                
+
+                game_state = GAME_RUNNING # GO BACK TO MAIN MENU STATE
+                
 
         #GAME PAUSED
         elif game_state == PAUSE_MENU:
@@ -197,13 +200,14 @@ def run_game():
 
                 #handle enter keydown
                 if event.type == pygame.KEYDOWN:
+
                     if event.key == pygame.K_ESCAPE:
                         game_state = GAME_RUNNING
 
                     if event.key == pygame.K_m:
                         #reset player positions
 
-                        player, enemies = init_new_game()
+                        player, enemies, tries_number = init_new_game()
                         
                         #goback to main menu
                         game_state = MAIN_MENU
